@@ -6,6 +6,7 @@ import { EducationComponent } from './features/education/education';
 import { SkillsAngularComponent } from './features/skills/skills-angular';
 import { PortfolioComponent } from './features/portfolio/portfolio';
 import { ContactComponent } from './features/contact/contact';
+import { SkillsGsapComponent } from "./features/skills/skills-gsap";
 
 @Component({
   selector: 'app-root',
@@ -16,9 +17,10 @@ import { ContactComponent } from './features/contact/contact';
     AboutMeComponent,
     EducationComponent,
     SkillsAngularComponent,
+    SkillsGsapComponent,
     PortfolioComponent,
-    ContactComponent,
-  ],
+    ContactComponent
+],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
