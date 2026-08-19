@@ -1,10 +1,12 @@
+// Angular Animations version
 import {
   Component,
   OnInit,
   ElementRef,
   inject,
-  viewChild,
+  computed,
 } from '@angular/core';
+import { ThemeService } from '../../core/theme.service';
 import {
   trigger,
   state,
@@ -17,7 +19,7 @@ import {
 } from '@angular/animations';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-home-angular',
   standalone: true,
   imports: [],
   animations: [
@@ -53,7 +55,7 @@ import {
     ]),
   ],
   template: `
-    <header class="masthead" id="home" @heroAnim>
+    <header class="masthead" id="home" @heroAnim [style.background]="mastheadBg()">
       <div class="masthead-inner">
         <div class="headline-group">
           <h1 class="headline">Hi,</h1>
@@ -79,7 +81,7 @@ import {
         align-items: center;
         justify-content: center;
         text-align: center;
-        background: url('/assets/images/bg-resume-wide.jpg') center center / cover no-repeat;
+        background: center center / cover no-repeat;
         overflow: hidden;
       }
 
@@ -137,11 +139,17 @@ import {
     `,
   ],
 })
-export class HomeComponent implements OnInit {
+export class HomeAngularComponent implements OnInit {
   private readonly el = inject(ElementRef);
+  private readonly themeService = inject(ThemeService);
+
+  protected readonly mastheadBg = computed(() =>
+    this.themeService.theme() === 'dark'
+      ? 'linear-gradient(to bottom, rgba(43, 42, 42, 0.8) 0%, rgba(26, 25, 24, 0.8) 100%), url("/assets/images/bg-resume-wide.jpg") center center / cover no-repeat'
+      : 'linear-gradient(to bottom, rgba(180, 179, 179, 0.8) 0%, rgba(216, 211, 207, 0.8) 100%), url("/assets/images/bg-resume-wide.jpg") center center / cover no-repeat',
+  );
 
   ngOnInit(): void {}
-
   protected scrollToAbout(): void {
     document.getElementById('about-me')?.scrollIntoView({ behavior: 'smooth' });
   }
