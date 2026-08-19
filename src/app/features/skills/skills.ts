@@ -26,7 +26,7 @@ interface SkillGroup {
   standalone: true,
   imports: [],
   template: `
-    <section class="resume-section" id="skills-gsap">
+    <section class="resume-section" id="skills" @sectionAnim>
       <div class="section-inner">
         <div class="article-title">Skills</div>
         <p class="article-paragraph">

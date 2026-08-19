@@ -80,7 +80,7 @@ interface NavItem {
             <span [innerHTML]="hamburgerIcon"></span>
           </button>
 
-          <span class="nav-brand">RS</span>
+          <span class="nav-brand">RSW</span>
 
           <!-- Nav items (large screens) -->
           <nav class="nav-links">

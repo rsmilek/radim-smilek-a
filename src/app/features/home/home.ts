@@ -14,7 +14,7 @@ import { ThemeService } from '../../core/theme.service';
   standalone: true,
   imports: [],
   template: `
-    <header class="masthead" id="home-gsap" [style.background]="mastheadBg()">
+    <header class="masthead" id="home" [style.background]="mastheadBg()">
       <div class="masthead-inner">
         <div class="headline-group">
           <h1 class="headline" #h1>Hi,</h1>
