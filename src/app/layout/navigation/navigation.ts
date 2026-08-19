@@ -222,7 +222,8 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   #observeSections(): void {
-      const ids: SectionId[] = ['home', 'about-me', 'education', 'skills', 'portfolio', 'contact'];
+    // get all section ids from navItems
+    const ids: SectionId[] = this.navItems.map(item => item.id as SectionId);
     // Wait for DOM ready
     setTimeout(() => {
       ids.forEach((id) => {
