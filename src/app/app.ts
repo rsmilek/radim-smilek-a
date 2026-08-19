@@ -3,10 +3,9 @@ import { NavigationComponent } from './layout/navigation/navigation';
 import { HomeComponent } from './features/home/home';
 import { AboutMeComponent } from './features/about-me/about-me';
 import { EducationComponent } from './features/education/education';
-import { SkillsAngularComponent } from './features/skills/skills-angular';
+import { SkillsGsapComponent } from "./features/skills/skills";
 import { PortfolioComponent } from './features/portfolio/portfolio';
 import { ContactComponent } from './features/contact/contact';
-import { SkillsGsapComponent } from "./features/skills/skills-gsap";
 
 @Component({
   selector: 'app-root',
@@ -16,7 +15,6 @@ import { SkillsGsapComponent } from "./features/skills/skills-gsap";
     HomeComponent,
     AboutMeComponent,
     EducationComponent,
-    SkillsAngularComponent,
     SkillsGsapComponent,
     PortfolioComponent,
     ContactComponent

@@ -53,3 +53,48 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+.resume-section {
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+}
+
+.section-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.article-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--mat-sys-primary);
+    border-left: 4px solid var(--mat-sys-primary);
+    padding-left: 0.75rem;
+}
+
+.article-subtitle {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--mat-sys-secondary);
+    margin-top: 1.25rem;
+}
+
+.article-paragraph {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--mat-sys-on-surface);
+}
+
+.mt-1 { 
+    margin-top: 0.0rem; 
+}
+
+.italic { 
+    font-style: italic; 
+}
+
+

@@ -1,14 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import {
-  trigger,
-  transition,
-  style,
-  animate,
-  query,
-  stagger,
-  group,
-} from '@angular/animations';
 import { SOCIAL_ICONS } from '../../shared/icons/icons';
 
 interface SocialLink {
@@ -22,28 +13,6 @@ interface SocialLink {
   selector: 'app-contact',
   standalone: true,
   imports: [],
-  animations: [
-    trigger('contactAnim', [
-      transition(':enter', [
-        group([
-          query('.article-title', [
-            style({ opacity: 0, transform: 'translateX(-40px)' }),
-            animate('0.5s ease-out', style({ opacity: 1, transform: 'translateX(0)' })),
-          ]),
-          query('.social-icon', [
-            style({ opacity: 0, transform: 'scale(0)' }),
-            stagger(80, [
-              animate('0.4s cubic-bezier(0.175,0.885,0.32,1.275)', style({ opacity: 1, transform: 'scale(1)' })),
-            ]),
-          ], { optional: true }),
-          query('.contact-form', [
-            style({ opacity: 0, transform: 'translateX(40px)' }),
-            animate('0.6s 0.2s ease-out', style({ opacity: 1, transform: 'translateX(0)' })),
-          ], { optional: true }),
-        ]),
-      ]),
-    ]),
-  ],
   template: `
     <section class="resume-section" id="contact" @contactAnim>
       <div class="section-inner">
@@ -89,37 +58,6 @@ interface SocialLink {
   styles: [
     `
       :host { display: block; }
-
-      .resume-section {
-        min-height: 100dvh;
-        padding: 5rem 2rem 3rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .section-inner {
-        max-width: 900px;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-      }
-
-      .article-title {
-        font-size: 2rem;
-        font-weight: 700;
-        color: var(--mat-sys-primary);
-        border-left: 4px solid var(--mat-sys-primary);
-        padding-left: 0.75rem;
-      }
-
-      .article-paragraph {
-        font-size: 1rem;
-        line-height: 1.7;
-        color: var(--mat-sys-on-surface);
-        margin-bottom: 1rem;
-      }
 
       .contact-cols {
         display: grid;

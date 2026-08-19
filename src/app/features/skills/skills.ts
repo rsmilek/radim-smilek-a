@@ -1,25 +1,13 @@
-// Angular Animations version
 import {
   Component,
   OnInit,
+  AfterViewInit,
+  OnDestroy,
   ElementRef,
-  inject,
-  signal,
-  DestroyRef,
+  inject
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import {
-  trigger,
-  state,
-  style,
-  transition,
-  animate,
-  query,
-  stagger,
-  group,
-  AnimationBuilder,
-  AnimationPlayer,
-} from '@angular/animations';
+import gsap from 'gsap';
 import { SKILL_ICONS } from '../../shared/icons/icons';
 
 interface SkillIcon {
@@ -34,38 +22,13 @@ interface SkillGroup {
 }
 
 @Component({
-  selector: 'app-skills-angular',
+  selector: 'app-skills-gsap',
   standalone: true,
   imports: [],
-  animations: [
-    trigger('groupAnim', [
-      transition(':enter', [
-        group([
-          query('.skill-header', [
-            style({ opacity: 0 }),
-            animate('0.4s ease-in', style({ opacity: 1 })),
-          ], { optional: true }),
-          query('.skill-title', [
-            style({ opacity: 0, scale: 0 }),
-            stagger(300, [
-              animate('0.4s cubic-bezier(0.175,0.885,0.32,1.275)', style({ opacity: 1, scale: 1 })),
-              animate('0.4s 0.1s cubic-bezier(0.175,0.885,0.32,1.275)', style({ opacity: 0, scale: 1 })),
-            ]),
-          ], { optional: true }),
-          query('.skill-icon', [
-            style({ opacity: 0, scale: 0.5 }),
-            stagger(300, [
-              animate('0.6s 0.6s cubic-bezier(0.175,0.885,0.32,1.275)', style({ opacity: 1, scale: 1 })),
-            ]),
-          ], { optional: true }),
-        ]),
-      ]),
-    ]),
-  ],
   template: `
-    <section class="resume-section" id="skills">
+    <section class="resume-section" id="skills-gsap">
       <div class="section-inner">
-        <div class="article-title">Skills</div>
+        <div class="article-title">Skills (GSAP)</div>
         <p class="article-paragraph">
           Worked primarily with C# and JavaScript with frameworks such as .NET, .NET Core and React.js.
         </p>
@@ -75,14 +38,14 @@ interface SkillGroup {
         </p>
 
         @for (group of skillGroups; track group.header; let i = $index) {
-          <div class="skill-group" @groupAnim>
-            <div class="skill-header">{{ group.header }}</div>
+          <div class="skill-group">
+            <div class="skill-header gsap-header">{{ group.header }}</div>
             <div class="icons-container">
               @for (icon of group.icons; track icon.key) {
                 <div class="icon-wrapper">
                   <div class="icon-box">
-                    <div class="skill-icon" [innerHTML]="icon.svg"></div>
-                    <div class="skill-title">{{ icon.title }}</div>
+                    <div class="skill-icon gsap-icon" [innerHTML]="icon.svg"></div>
+                    <div class="skill-title gsap-title">{{ icon.title }}</div>
                   </div>
                 </div>
               }
@@ -96,41 +59,7 @@ interface SkillGroup {
     `
       :host { display: block; }
 
-      .resume-section {
-        min-height: 100dvh;
-        padding: 5rem 2rem 3rem;
-        display: flex;
-        align-items: flex-start;
-        justify-content: center;
-      }
-
-      .section-inner {
-        max-width: 900px;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      .article-title {
-        font-size: 2rem;
-        font-weight: 700;
-        color: var(--mat-sys-primary);
-        border-left: 4px solid var(--mat-sys-primary);
-        padding-left: 0.75rem;
-      }
-
-      .article-paragraph {
-        font-size: 1rem;
-        line-height: 1.7;
-        color: var(--mat-sys-on-surface);
-      }
-
-      .mt-1 { margin-top: 0.5rem; }
-
-      .skill-group {
-        margin-top: 1rem;
-      }
+      .skill-group { margin-top: 1rem; }
 
       .skill-header {
         font-size: 1.1rem;
@@ -178,12 +107,17 @@ interface SkillGroup {
         overflow: hidden;
         text-overflow: ellipsis;
         max-width: 72px;
+        opacity: 0;
+        scale: 0;
       }
     `,
   ],
 })
-export class SkillsAngularComponent implements OnInit {
+export class SkillsGsapComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly sanitizer = inject(DomSanitizer);
+  private readonly elRef = inject(ElementRef);
+  private animationTween = gsap.timeline({ paused: true });
+  private observer: IntersectionObserver | null = null;
 
   protected readonly skillGroups: SkillGroup[] = [
     {
@@ -228,11 +162,68 @@ export class SkillsAngularComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  ngAfterViewInit(): void {
+    this.#bindAnimation();
+    this.#setupIntersectionObserver();
+  }
+
+  ngOnDestroy(): void {
+    this.observer?.disconnect();
+    this.animationTween.kill();
+  }
+
   #icons(entries: [string, string][]): SkillIcon[] {
     return entries.map(([key, title]) => ({
       key,
       title,
       svg: this.sanitizer.bypassSecurityTrustHtml(SKILL_ICONS[key] ?? ''),
     }));
+  }
+
+  #bindAnimation(): void {
+    const STAGGER = 0.3;
+    const host: HTMLElement = this.elRef.nativeElement;
+    const groups = host.querySelectorAll<HTMLElement>('.skill-group');
+
+    groups.forEach((group, index) => {
+      const header = group.querySelector<HTMLElement>('.gsap-header');
+      const icons = Array.from(group.querySelectorAll<HTMLElement>('.gsap-icon'));
+      const titles = Array.from(group.querySelectorAll<HTMLElement>('.gsap-title'));
+      const DURATION = icons.length * STAGGER;
+      const OFFSET = 0.3 * index;
+
+      this.animationTween
+        // Header – show
+        .from(header, { opacity: 0 }, 0 + OFFSET)
+        // Titles – show
+        .to(
+          titles,
+          { duration: DURATION, scale: 1, opacity: 1, stagger: STAGGER, ease: 'elastic', force3D: true },
+          0 + OFFSET,
+        )
+        // Titles – hide
+        .to(
+          titles,
+          { duration: DURATION, scale: 1, opacity: 0, stagger: STAGGER, ease: 'elastic', force3D: true },
+          OFFSET + STAGGER + 0.1,
+        )
+        // Icons – show
+        .from(
+          icons,
+          { duration: DURATION, scale: 0.5, opacity: 0, stagger: STAGGER, ease: 'elastic', force3D: true },
+          OFFSET + 2 * STAGGER,
+        );
+    });
+  }
+
+  #setupIntersectionObserver(): void {
+    const host: HTMLElement = this.elRef.nativeElement;
+    this.observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) this.animationTween.restart();
+      },
+      { threshold: 0.5 },
+    );
+    this.observer.observe(host);
   }
 }
