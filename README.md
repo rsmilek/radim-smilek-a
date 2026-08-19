@@ -53,7 +53,6 @@ public/assets/
 | Icons | All SVGs inlined as TypeScript string constants, rendered via `[innerHTML]` + `DomSanitizer` |
 | Scroll-spy | `IntersectionObserver` wrapped in `ScrollSpyService` |
 | Theme | `ThemeService` toggles `dark-theme` class on `<html>`; persists to `localStorage` |
-| Skills animations | Two standalone components: `SkillsAngularComponent` (routed) and `SkillsGsapComponent` (alternative) |
 
 ---
 
@@ -91,21 +90,7 @@ Output is written to `dist/radim-smilek-a/`.
 
 ## Publish to Azure Static Web Apps
 
-### Option A — Azure Static Web Apps CLI
-
-```bash
-npm install -g @azure/static-web-apps-cli
-
-# Build first
-npm run build
-
-# Deploy
-swa deploy dist/radim-smilek-a/browser \
-  --app-name <your-static-web-app-name> \
-  --resource-group <your-resource-group>
-```
-
-### Option B — GitHub Actions (recommended)
+### Option A — GitHub Actions (recommended)
 
 1. Create an **Azure Static Web Apps** resource in the [Azure Portal](https://portal.azure.com).
 2. Link it to this GitHub repository.
@@ -122,6 +107,20 @@ swa deploy dist/radim-smilek-a/browser \
 ```
 
 5. Push to the default branch — the GitHub Action builds and deploys automatically.
+
+### Option B — Azure Static Web Apps CLI
+
+```bash
+npm install -g @azure/static-web-apps-cli
+
+# Build first
+npm run build
+
+# Deploy
+swa deploy dist/radim-smilek-a/browser \
+  --app-name <your-static-web-app-name> \
+  --resource-group <your-resource-group>
+```
 
 
 ## Development server
