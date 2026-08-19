@@ -10,7 +10,7 @@ import gsap from 'gsap';
 import { ThemeService } from '../../core/theme.service';
 
 @Component({
-  selector: 'app-home-gsap',
+  selector: 'app-home',
   standalone: true,
   imports: [],
   template: `

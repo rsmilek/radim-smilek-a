@@ -22,13 +22,13 @@ interface SkillGroup {
 }
 
 @Component({
-  selector: 'app-skills-gsap',
+  selector: 'app-skills',
   standalone: true,
   imports: [],
   template: `
     <section class="resume-section" id="skills-gsap">
       <div class="section-inner">
-        <div class="article-title">Skills (GSAP)</div>
+        <div class="article-title">Skills</div>
         <p class="article-paragraph">
           Worked primarily with C# and JavaScript with frameworks such as .NET, .NET Core and React.js.
         </p>
