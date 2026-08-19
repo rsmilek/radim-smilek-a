@@ -1,6 +1,6 @@
 import { Injectable, signal, OnDestroy } from '@angular/core';
 
-export type SectionId = 'home' | 'about-me' | 'skills' | 'portfolio' | 'contact';
+export type SectionId = 'home' | 'about-me' | 'education' | 'skills' | 'portfolio' | 'contact';
 
 @Injectable({ providedIn: 'root' })
 export class ScrollSpyService implements OnDestroy {

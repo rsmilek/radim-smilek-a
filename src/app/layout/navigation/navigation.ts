@@ -189,6 +189,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   protected readonly navItems: NavItem[] = [
     { id: 'home', label: 'Home' },
     { id: 'about-me', label: 'About Me' },
+    { id: 'education', label: 'Education' },
     { id: 'skills', label: 'Skills' },
     { id: 'portfolio', label: 'Portfolio' },
     { id: 'contact', label: 'Contact' },
@@ -221,7 +222,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   #observeSections(): void {
-    const ids: SectionId[] = ['home', 'about-me', 'skills', 'portfolio', 'contact'];
+      const ids: SectionId[] = ['home', 'about-me', 'education', 'skills', 'portfolio', 'contact'];
     // Wait for DOM ready
     setTimeout(() => {
       ids.forEach((id) => {
