@@ -113,7 +113,7 @@ interface SkillGroup {
     `,
   ],
 })
-export class SkillsGsapComponent implements OnInit, AfterViewInit, OnDestroy {
+export class SkillsComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly sanitizer = inject(DomSanitizer);
   private readonly elRef = inject(ElementRef);
   private animationTween = gsap.timeline({ paused: true });
