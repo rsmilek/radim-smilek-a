@@ -39,7 +39,8 @@ interface NavItem {
   ],
   template: `
     <mat-sidenav-container class="nav-sidenav-container">
-      <!-- Drawer for mobile -->
+      
+    <!-- Drawer for mobile -->
       <mat-sidenav #drawer class="nav-drawer" mode="over" position="start">
         <div class="drawer-header">
           <button
@@ -103,12 +104,18 @@ interface NavItem {
             (click)="themeService.toggle()"
             aria-label="Toggle theme"
           >
-            <span [innerHTML]="themeIcon()"></span>
+            <span
+              class="theme-icon" 
+              [innerHTML]="themeIcon()"
+              >
+            </span>
           </button>
+
         </mat-toolbar>
 
         <!-- Page content projected here -->
         <ng-content></ng-content>
+
       </mat-sidenav-content>
     </mat-sidenav-container>
   `,
@@ -128,13 +135,27 @@ interface NavItem {
 
       .nav-brand {
         font-weight: 700;
-        font-size: 1.25rem;
-        margin-right: 1rem;
+        font-size: 2.0rem;
+        margin-right: 3rem;
+        color: var(--mat-sys-primary);
       }
 
       .nav-links {
         display: flex;
         gap: 0.25rem;
+      }
+
+      .nav-links button {
+        font-size: 1rem;
+        color: var(--mat-sys-primary);
+      }
+
+      .nav-links button:hover {
+        color: var(--mat-sys-on-surface);
+      }
+
+      .nav-drawer mat-list-item {
+        color: var(--mat-sys-primary);
       }
 
       .nav-links button.active,
@@ -147,8 +168,13 @@ interface NavItem {
         flex: 1 1 auto;
       }
 
+      .theme-icon {
+        color: var(--mat-sys-primary);
+      }
+
       .hamburger-btn {
         display: none;
+        color: var(--mat-sys-primary);
       }
 
       @media (max-width: 768px) {
