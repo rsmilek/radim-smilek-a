@@ -91,7 +91,7 @@ import { ThemeService } from '../../core/theme.service';
     `,
   ],
 })
-export class HomeGsapComponent implements AfterViewInit, OnDestroy {
+export class HomeComponent implements AfterViewInit, OnDestroy {
   private readonly elRef = inject(ElementRef);
   private readonly themeService = inject(ThemeService);
   private tween = gsap.timeline({ paused: true });

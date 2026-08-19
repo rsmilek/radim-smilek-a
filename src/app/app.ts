@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationComponent } from './layout/navigation/navigation';
-//import { HomeAngularComponent } from './features/home/home-angular';
-import { HomeGsapComponent } from './features/home/home-gsap';
+import { HomeComponent } from './features/home/home';
 import { AboutMeComponent } from './features/about-me/about-me';
 import { EducationComponent } from './features/education/education';
 import { SkillsAngularComponent } from './features/skills/skills-angular';
@@ -14,8 +13,7 @@ import { SkillsGsapComponent } from "./features/skills/skills-gsap";
   standalone: true,
   imports: [
     NavigationComponent,
-    //HomeAngularComponent,
-    HomeGsapComponent,
+    HomeComponent,
     AboutMeComponent,
     EducationComponent,
     SkillsAngularComponent,
