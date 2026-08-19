@@ -8,12 +8,12 @@ import { Component } from '@angular/core';
     <section class="resume-section" id="about-me" @sectionAnim>
       <div class="section-inner">
         <div class="article-title">About Me</div>
-        <img
-          class="profile-img"
-          src="/assets/images/profile.jpg"
-          alt="Radim Smílek profile photo"
-        />
         <p class="article-paragraph">
+          <img
+            class="profile-img"
+            src="/assets/images/profile.jpg"
+            alt="Radim Smílek profile photo"
+          />
           I am a SW developer and architect with several years of experience in the field management
           of technological processes and processing of data obtained from them. I have worked mainly
           on desktop applications, but nowadays primarily on web and mobile applications.
@@ -39,11 +39,12 @@ import { Component } from '@angular/core';
       :host { display: block; }
 
       .profile-img {
+        float: right;
         width: 10rem;
         height: 10rem;
         border-radius: 50%;
         object-fit: cover;
-        align-self: center;
+        margin: 0 0 1rem 1.5rem;
         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
       }
     `,
