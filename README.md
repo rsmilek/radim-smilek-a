@@ -67,7 +67,7 @@ npm install
 ## Serve (development)
 
 ```bash
-npm start
+npm run start
 # or
 ng serve
 ```
@@ -93,6 +93,11 @@ Output is written to `dist/radim-smilek-a/`.
 ### Option A — GitHub Actions (recommended)
 
 1. Create an **Azure Static Web Apps** resource in the [Azure Portal](https://portal.azure.com).
+Generally use default values recommended by wizard except those:
+  app_location: "/" # App source code path
+  api_location: "" # Api source code path - optional
+  output_location: "dist/radim-smilek-a/browser" # Built app content directory
+
 2. Link it to this GitHub repository.
 3. Azure generates a workflow file (`.github/workflows/azure-static-web-apps-*.yml`) automatically.
 4. Add `staticwebapp.config.json` at the project root:
@@ -106,7 +111,15 @@ Output is written to `dist/radim-smilek-a/`.
 }
 ```
 
-5. Push to the default branch — the GitHub Action builds and deploys automatically.
+5. Add Node.js version definition for Angular version e.g. Angular 21:
+
+```json
+  "engines": {
+    "node": "^20.19.0 || ^22.12.0 || ^24.0.0"
+  }
+```
+
+6. Push to the default branch — the GitHub Action builds and deploys automatically.
 
 ### Option B — Azure Static Web Apps CLI
 
