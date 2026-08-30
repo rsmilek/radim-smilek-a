@@ -45,7 +45,7 @@ public/assets/
 
 | Concern | Approach |
 |---|---|
-| Framework | Angular 22, standalone components only |
+| Framework | Angular 21, standalone components only |
 | UI | Angular Material M3 with `azure-blue` palette |
 | Routing | No routes — single scroll page |
 | Reactive state | Angular Signals (`signal`, `computed`, `effect`) |
