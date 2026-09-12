@@ -1,10 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { SOCIAL_ICONS } from '../../shared/icons/icons';
 
 interface SocialLink {
   key: string;
-  icon: SafeHtml;
+  icon: string;
   href: string;
   label: string;
 }
@@ -32,8 +31,9 @@ interface SocialLink {
                   target="_blank"
                   rel="noopener noreferrer"
                   [attr.aria-label]="link.label"
-                  [innerHTML]="link.icon"
-                ></a>
+                >
+                  <img [src]="link.icon" [alt]="link.label" />
+                </a>
               }
             </div>
           </div>
@@ -88,10 +88,16 @@ interface SocialLink {
 
         &:hover { background: var(--mat-sys-primary-container); }
 
-        ::ng-deep svg {
+        img {
           width: 24px;
           height: 24px;
-          fill: currentColor;
+          object-fit: contain;
+          filter: brightness(0);
+        }
+
+        // Icon color adjustments by Light / Dark theme 
+        :host-context(.dark-theme) & img {
+          filter: brightness(0) invert(1);
         }
       }
 
@@ -138,36 +144,34 @@ interface SocialLink {
   ],
 })
 export class ContactComponent {
-  private readonly sanitizer = inject(DomSanitizer);
-
   protected readonly socialLinks: SocialLink[] = [
     {
       key: 'email',
-      icon: this.sanitizer.bypassSecurityTrustHtml(SOCIAL_ICONS['email']),
+      icon: SOCIAL_ICONS['email'],
       href: 'mailto:smilek.radim@gmail.com',
       label: 'Email',
     },
     {
       key: 'linkedin',
-      icon: this.sanitizer.bypassSecurityTrustHtml(SOCIAL_ICONS['linkedin']),
+      icon: SOCIAL_ICONS['linkedin'],
       href: 'https://www.linkedin.com/in/smilekradim/',
       label: 'LinkedIn',
     },
     {
       key: 'github',
-      icon: this.sanitizer.bypassSecurityTrustHtml(SOCIAL_ICONS['github']),
+      icon: SOCIAL_ICONS['github'],
       href: 'https://github.com/rsmilek',
       label: 'GitHub',
     },
     {
       key: 'facebook',
-      icon: this.sanitizer.bypassSecurityTrustHtml(SOCIAL_ICONS['facebook']),
+      icon: SOCIAL_ICONS['facebook'],
       href: 'https://www.facebook.com/radim.smilek',
       label: 'Facebook',
     },
     {
       key: 'instagram',
-      icon: this.sanitizer.bypassSecurityTrustHtml(SOCIAL_ICONS['instagram']),
+      icon: SOCIAL_ICONS['instagram'],
       href: 'https://www.instagram.com/smilek.radim/',
       label: 'Instagram',
     },

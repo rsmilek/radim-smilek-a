@@ -6,14 +6,13 @@ import {
   ElementRef,
   inject
 } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import gsap from 'gsap';
 import { SKILL_ICONS } from '../../shared/icons/icons';
 
 interface SkillIcon {
   key: string;
   title: string;
-  svg: SafeHtml;
+  svg: string;
 }
 
 interface SkillGroup {
@@ -44,7 +43,7 @@ interface SkillGroup {
               @for (icon of group.icons; track icon.key) {
                 <div class="icon-wrapper">
                   <div class="icon-box">
-                    <div class="skill-icon gsap-icon" [innerHTML]="icon.svg"></div>
+                    <img class="skill-icon gsap-icon" [src]="icon.svg" [alt]="icon.title" />
                     <div class="skill-title gsap-title">{{ icon.title }}</div>
                   </div>
                 </div>
@@ -91,12 +90,13 @@ interface SkillGroup {
       .skill-icon {
         width: 48px;
         height: 48px;
+        object-fit: contain;
+        filter: brightness(0);
+      }
 
-        ::ng-deep svg {
-          width: 48px;
-          height: 48px;
-          fill: var(--mat-sys-on-surface);
-        }
+      // Icon color adjustments by Light / Dark theme 
+      :host-context(.dark-theme) .skill-icon {
+        filter: brightness(0) invert(1);
       }
 
       .skill-title {
@@ -114,7 +114,6 @@ interface SkillGroup {
   ],
 })
 export class SkillsComponent implements OnInit, AfterViewInit, OnDestroy {
-  private readonly sanitizer = inject(DomSanitizer);
   private readonly elRef = inject(ElementRef);
   private animationTween = gsap.timeline({ paused: true });
   private observer: IntersectionObserver | null = null;
@@ -176,7 +175,7 @@ export class SkillsComponent implements OnInit, AfterViewInit, OnDestroy {
     return entries.map(([key, title]) => ({
       key,
       title,
-      svg: this.sanitizer.bypassSecurityTrustHtml(SKILL_ICONS[key] ?? ''),
+      svg: SKILL_ICONS[key] ?? '',
     }));
   }
 
@@ -199,19 +198,26 @@ export class SkillsComponent implements OnInit, AfterViewInit, OnDestroy {
         .to(
           titles,
           { duration: DURATION, scale: 1, opacity: 1, stagger: STAGGER, ease: 'elastic', force3D: true },
-          0 + OFFSET,
+          0 + OFFSET
         )
         // Titles – hide
         .to(
           titles,
           { duration: DURATION, scale: 1, opacity: 0, stagger: STAGGER, ease: 'elastic', force3D: true },
-          OFFSET + STAGGER + 0.1,
+          OFFSET + STAGGER + 0.1
         )
-        // Icons – show
+        // Icons – hide
         .from(
           icons,
-          { duration: DURATION, scale: 0.5, opacity: 0, stagger: STAGGER, ease: 'elastic', force3D: true },
-          OFFSET + 2 * STAGGER,
+          { duration: DURATION, scale: 1, opacity: 0, stagger: STAGGER, ease: 'elastic', force3D: true },
+          0 + OFFSET
+        )
+        // Icons – show
+        // NOTE: immediateRender is set to false to fix display issue on mobile screens (invisible)
+        .from(
+          icons,
+          { duration: DURATION, scale: 0.5, opacity: 0, stagger: STAGGER, ease: 'elastic', force3D: true, immediateRender: false },
+          OFFSET + STAGGER
         );
     });
   }
