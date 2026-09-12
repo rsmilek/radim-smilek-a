@@ -92,6 +92,7 @@ interface SkillGroup {
         height: 48px;
         object-fit: contain;
         filter: brightness(0);
+        opacity: 0;
       }
 
       // Icon color adjustments by Light / Dark theme 
@@ -206,17 +207,11 @@ export class SkillsComponent implements OnInit, AfterViewInit, OnDestroy {
           { duration: DURATION, scale: 1, opacity: 0, stagger: STAGGER, ease: 'elastic', force3D: true },
           OFFSET + STAGGER + 0.1
         )
-        // Icons – hide
-        .from(
-          icons,
-          { duration: DURATION, scale: 1, opacity: 0, stagger: STAGGER, ease: 'elastic', force3D: true },
-          0 + OFFSET
-        )
         // Icons – show
         // NOTE: immediateRender is set to false to fix display issue on mobile screens (invisible)
-        .from(
+        .to(
           icons,
-          { duration: DURATION, scale: 0.5, opacity: 0, stagger: STAGGER, ease: 'elastic', force3D: true, immediateRender: false },
+          { duration: DURATION, scale: 0.8, opacity: 1, stagger: STAGGER, ease: 'elastic', force3D: true },
           OFFSET + STAGGER
         );
     });
@@ -228,7 +223,7 @@ export class SkillsComponent implements OnInit, AfterViewInit, OnDestroy {
       ([entry]) => {
         if (entry.isIntersecting) this.animationTween.restart();
       },
-      { threshold: 0.5 },
+      { threshold: 0.1 },
     );
     this.observer.observe(host);
   }
