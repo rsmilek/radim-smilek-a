@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+
+// Material Design Modules
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
+// Application Components
 import { NavigationComponent } from './layout/navigation/navigation';
 import { HomeComponent } from './features/home/home.component';
 import { AboutMeComponent } from './features/about-me/about-me.component';
@@ -11,6 +16,7 @@ import { ContactComponent } from './features/contact/contact.component';
   selector: 'app-root',
   standalone: true,
   imports: [
+    MatSnackBarModule,
     NavigationComponent,
     HomeComponent,
     AboutMeComponent,

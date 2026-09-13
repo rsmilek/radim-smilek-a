@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { SOCIAL_ICONS } from '../../shared/icons/icons';
+import { NotificationService } from '../../services/notification.service';
 
 interface SocialLink {
   key: string;
@@ -42,6 +43,7 @@ interface SocialLink {
             class="contact-form"
             action="https://sendmail.w3layouts.com/SubmitContactForm"
             method="post"
+            (submit)="onSubmit($event)"
           >
             <input class="form-input" type="text" name="w3lName" placeholder="Name" />
             <input class="form-input" type="email" name="w3lSender" placeholder="Email" />
@@ -144,11 +146,13 @@ interface SocialLink {
   ],
 })
 export class ContactComponent {
+  private readonly notificationService = inject(NotificationService);
+
   protected readonly socialLinks: SocialLink[] = [
     {
       key: 'email',
       icon: SOCIAL_ICONS['email'],
-      href: 'mailto:smilek.radim@gmail.com',
+      href: 'mailto:rsw@rsw.one',
       label: 'Email',
     },
     {
@@ -176,4 +180,9 @@ export class ContactComponent {
       label: 'Instagram',
     },
   ];
+
+  protected onSubmit(event: SubmitEvent): void {
+    event.preventDefault();
+    this.notificationService.openSuccessNotification('Email message sent successfully.');
+  }
 }

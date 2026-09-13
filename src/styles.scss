@@ -7,6 +7,19 @@
 @import '@fontsource/roboto/500.css';
 @import '@fontsource/roboto/700.css';
 
+// Color variables
+$success-color: #1e7e34;
+$success-bg: #e8f5e8;
+$success-border: #a3d977;
+
+$error-color: #e53e3e;
+$error-bg: #fdf2f2;
+$error-border: #feb2b2;
+
+$info-color: #3182ce;
+$info-bg: #ebf8ff;
+$info-border: #90cdf4;
+
 // Include M3 theme with azure-blue
 html {
   @include mat.theme((
@@ -54,6 +67,35 @@ html {
   scroll-behavior: smooth;
 }
 
+// Snack bar custom styles
+.snack-bar-success {
+  @include mat.snack-bar-overrides((
+    button-color: white,
+    container-color: $success-color,
+    supporting-text-color: white,
+    supporting-text-weight: bold
+  ));
+}
+
+.snack-bar-error {
+  @include mat.snack-bar-overrides((
+    button-color: white,
+    container-color: $error-color,
+    supporting-text-color: white,
+    supporting-text-weight: bold
+  ));
+}
+
+.snack-bar-info {
+  @include mat.snack-bar-overrides((
+    button-color: white,
+    container-color: $info-color,
+    supporting-text-color: white,
+    supporting-text-weight: bold
+  ));
+}
+
+// App specific styles
 .resume-section {
     display: flex;
     align-items: center;
